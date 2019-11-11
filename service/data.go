@@ -211,7 +211,7 @@ func (this *Data_Controller) Getlastrecordbyeid(_number string, _patient string)
 	log.Println(_number, "内镜镜,最后一次洗消记录返回。")
 
 	if len(_patient) > 0 {
-		sqlstr = "update ant set patient_name='" + _patient + "' where number='" + ants[0]["number"].(string) + "'"
+		sqlstr = "update ant set patient_name='" + _patient + "' where number='" + ants[0]["number"].(string) + "' and patient_name=''"
 		o := orm.NewOrm()
 		o.Using(dbname)
 		_, err := o.Raw(sqlstr).Exec()
