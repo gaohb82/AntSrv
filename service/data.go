@@ -144,7 +144,7 @@ func (this *Data_Controller) device_GetAll() (res map[string]STRUCT_DEVICE_INFO)
 
 func (this *Data_Controller) Getlastrecordbyeid(_number string, _patient string) (res map[string]AntDb) {
 
-	sqlstrpart := " begin_time <> end_time and "
+	sqlstrpart := " begin_time <> end_time and patient_name == '' and "
 	if beego.AppConfig.String("includeprocessing") == "true" {
 		sqlstrpart = ""
 	}
