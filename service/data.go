@@ -146,13 +146,13 @@ func (this *Data_Controller) Getlastrecordbyeid(_number string, _patient string)
 
 	sqlstrpart := " begin_time <> end_time and patient_name == '' and "
 	if beego.AppConfig.String("includeprocessing") == "true" {
-		sqlstrpart = ""
+		sqlstrpart = " patient_name == '' and "
 	}
 
 	sqlstr := "select begin_time from ant where " + sqlstrpart + " endoscope_number='" + _number +
 		"'  ORDER BY ID DESC  limit 0,1 "
 	ants := []orm.Params{}
-
+	log.Print(sqlstr)
 	dbname := "defautl"
 	var lasttime int64
 	lasttime = 0
