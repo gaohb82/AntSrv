@@ -3,6 +3,7 @@ package service
 import (
 	"encoding/json"
 	"log"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -144,15 +145,17 @@ func (this *Data_Controller) device_GetAll() (res map[string]STRUCT_DEVICE_INFO)
 
 func (this *Data_Controller) Getlastrecordbyeid(_number string, _patient string) (res map[string]AntDb) {
 
-	sqlstrpart := " begin_time <> end_time and patient_name == '' and "
+	_patient, _ = url.QueryUnescape(_patient)
+
+	sqlstrpart := " begin_time <> end_time and patient_name = '' and "
 	if beego.AppConfig.String("includeprocessing") == "true" {
-		sqlstrpart = " patient_name == '' and "
+		sqlstrpart = " patient_name = '' and "
 	}
 
 	sqlstr := "select begin_time from ant where " + sqlstrpart + " endoscope_number='" + _number +
 		"'  ORDER BY ID DESC  limit 0,1 "
 	ants := []orm.Params{}
-	log.Print(sqlstr)
+
 	dbname := "defautl"
 	var lasttime int64
 	lasttime = 0
