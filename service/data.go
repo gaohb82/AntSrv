@@ -152,6 +152,8 @@ func (this *Data_Controller) Getlastrecordbyeid(_number string, _patient string)
 		sqlstrpart = " patient_name = '' and "
 	}
 
+	sqlstrpart += " begin_time>='" + time.Now().Format("2006-01-02") + " 00:00:00' and begin_time<='" + time.Now().Format("2006-01-02") + " 23:59:59' and "
+
 	sqlstr := "select begin_time from ant where " + sqlstrpart + " endoscope_number='" + _number +
 		"'  ORDER BY ID DESC  limit 0,1 "
 	ants := []orm.Params{}
@@ -172,6 +174,7 @@ func (this *Data_Controller) Getlastrecordbyeid(_number string, _patient string)
 			}
 		}
 	}
+	log.Print(sqlstr)
 	if lasttime == 0 {
 		return make(map[string]AntDb)
 	}
